@@ -1,0 +1,36 @@
+version: "3"
+services:
+  desafio_postgres:
+    image: postgres:11
+    container_name: desafio_postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./.ignore/postgres/postgres:/var/lib/postgresql/data
+    networks:
+      - desafio_api
+    environment:
+      - POSTGRES_NAME=gostack_desafio06_tests
+      - NEW_POSTGRES_NAME=gostack_desafio06_tests
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=gostack_desafio06_tests
+
+  desafio_pgadmin:
+    image: dpage/pgadmin4
+    container_name: desafio_pgadmin
+    ports:
+      - "5433:80"
+    networks:
+      - desafio_api
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@desafio.com
+      - PGADMIN_DEFAULT_PASSWORD=desafio_pass
+    volumes:
+      - ./.ignore/var/lib/pgadmin:/var/lib/pgadmin
+    logging:
+      driver: none
+
+networks:
+  desafio_api:
+    driver: bridge
